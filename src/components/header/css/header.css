@@ -1,0 +1,40 @@
+header {
+  background: rgba(0,0,0,0.9);
+  color: white;
+  color: rgba(0, 0, 0, 0.8);
+  padding: 1.5% 3.5%;
+  display: flex;
+  align-items: center;
+  font-family: 'Gloria Hallelujah', cursive;
+  border-bottom-color: black;
+  border-bottom-color: rgba(0,0,0, 0.45);
+  border-bottom: 2px solid;
+}
+
+header>img {
+  width: 36px;
+}
+
+header span{
+  font-weight: normal;
+  color: white;
+  color: #5CB0D0;
+  color: rgba(92, 176, 208, 0.7);
+}
+
+header>span:first-of-type {
+  font-size: 36px;
+}
+
+header>span:last-of-type {
+  font-size: 24px;
+}
+
+@media screen and (max-width: 280px){
+  header>img{
+    width: 10%;
+  }
+  header span:first-of-type, header span:last-of-type{
+    font-size: inherit;
+  }
+}

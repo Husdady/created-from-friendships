@@ -1,0 +1,92 @@
+#add-friendship {
+  width: 36%;
+  padding: .5% 1.5% 3%;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: #60B0D0;
+  color: rgba(92, 176, 208, 0.85);
+  border-radius: 10px;
+  display: table;
+  max-width: 1000px;
+}
+
+#add-friendship h3 {
+  padding: 0 3%;
+}
+
+#add-friendship form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  font-family: 'Electrolize', sans-serif;
+}
+
+#add-friendship span {
+  width: 45%;
+  margin: 10px 0;
+  display: table;
+}
+
+#add-person {
+  background: #60B0D0;
+  background: rgba(92, 176, 208, 0.85);
+  padding: 15px 0;
+  width: 100%;
+  border-radius: 20px;
+  display: table;
+  margin: 20px auto 0;
+  font-family: 'Poiret One', sans-serif;
+  font-weight: bold;
+}
+
+#add-person:before {
+  content: '\f055';
+  font-family: 'Font Awesome 5 Pro';
+  font-weight: bold;
+}
+
+@media screen and (max-width: 1185px) {
+  #add-friendship {
+    width: 85%;
+    margin: auto;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  #add-friendship {
+    padding: .5% 3% 3%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #add-friendship {
+    width: 100%;
+    padding-bottom: 35px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  #add-friendship form {
+    justify-content: center;
+  }
+  #add-friendship span {
+    text-align: center;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .friend-delete h4 {
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 381px) {
+  .friend-delete img {
+    margin: 5px auto 7px;
+  }
+  .friend-delete h4 {
+    padding-left: 0;
+    width: 95%;
+    margin: auto;
+  }
+}
