@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/created-from-friendships/static/css/main.e543d0ed.chunk.css",
-    "main.js": "/created-from-friendships/static/js/main.c9336736.chunk.js",
-    "main.js.map": "/created-from-friendships/static/js/main.c9336736.chunk.js.map",
+    "main.css": "/created-from-friendships/static/css/main.56ac7ae8.chunk.css",
+    "main.js": "/created-from-friendships/static/js/main.44325b4f.chunk.js",
+    "main.js.map": "/created-from-friendships/static/js/main.44325b4f.chunk.js.map",
     "runtime-main.js": "/created-from-friendships/static/js/runtime-main.6e0d51e6.js",
     "runtime-main.js.map": "/created-from-friendships/static/js/runtime-main.6e0d51e6.js.map",
     "static/js/2.b47e7dc2.chunk.js": "/created-from-friendships/static/js/2.b47e7dc2.chunk.js",
@@ -10,13 +10,13 @@
     "static/js/3.cc1a11de.chunk.js": "/created-from-friendships/static/js/3.cc1a11de.chunk.js",
     "static/js/3.cc1a11de.chunk.js.map": "/created-from-friendships/static/js/3.cc1a11de.chunk.js.map",
     "index.html": "/created-from-friendships/index.html",
-    "static/css/main.e543d0ed.chunk.css.map": "/created-from-friendships/static/css/main.e543d0ed.chunk.css.map",
+    "static/css/main.56ac7ae8.chunk.css.map": "/created-from-friendships/static/css/main.56ac7ae8.chunk.css.map",
     "static/js/2.b47e7dc2.chunk.js.LICENSE.txt": "/created-from-friendships/static/js/2.b47e7dc2.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.6e0d51e6.js",
     "static/js/2.b47e7dc2.chunk.js",
-    "static/css/main.e543d0ed.chunk.css",
-    "static/js/main.c9336736.chunk.js"
+    "static/css/main.56ac7ae8.chunk.css",
+    "static/js/main.44325b4f.chunk.js"
   ]
 }
