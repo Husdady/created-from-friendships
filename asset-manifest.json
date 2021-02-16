@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/created-from-friendships/static/css/main.fb27a66d.chunk.css",
-    "main.js": "/created-from-friendships/static/js/main.0444ae0c.chunk.js",
-    "main.js.map": "/created-from-friendships/static/js/main.0444ae0c.chunk.js.map",
-    "runtime-main.js": "/created-from-friendships/static/js/runtime-main.6e0d51e6.js",
-    "runtime-main.js.map": "/created-from-friendships/static/js/runtime-main.6e0d51e6.js.map",
-    "static/js/2.35d773bb.chunk.js": "/created-from-friendships/static/js/2.35d773bb.chunk.js",
-    "static/js/2.35d773bb.chunk.js.map": "/created-from-friendships/static/js/2.35d773bb.chunk.js.map",
-    "static/js/3.cc1a11de.chunk.js": "/created-from-friendships/static/js/3.cc1a11de.chunk.js",
-    "static/js/3.cc1a11de.chunk.js.map": "/created-from-friendships/static/js/3.cc1a11de.chunk.js.map",
+    "main.css": "/created-from-friendships/static/css/main.0f70511c.chunk.css",
+    "main.js": "/created-from-friendships/static/js/main.8b3f6cc9.chunk.js",
+    "main.js.map": "/created-from-friendships/static/js/main.8b3f6cc9.chunk.js.map",
+    "runtime-main.js": "/created-from-friendships/static/js/runtime-main.c1044159.js",
+    "runtime-main.js.map": "/created-from-friendships/static/js/runtime-main.c1044159.js.map",
+    "static/js/2.cb1ea2b2.chunk.js": "/created-from-friendships/static/js/2.cb1ea2b2.chunk.js",
+    "static/js/2.cb1ea2b2.chunk.js.map": "/created-from-friendships/static/js/2.cb1ea2b2.chunk.js.map",
+    "static/js/3.e2d2d13e.chunk.js": "/created-from-friendships/static/js/3.e2d2d13e.chunk.js",
+    "static/js/3.e2d2d13e.chunk.js.map": "/created-from-friendships/static/js/3.e2d2d13e.chunk.js.map",
     "index.html": "/created-from-friendships/index.html",
-    "static/css/main.fb27a66d.chunk.css.map": "/created-from-friendships/static/css/main.fb27a66d.chunk.css.map",
-    "static/js/2.35d773bb.chunk.js.LICENSE.txt": "/created-from-friendships/static/js/2.35d773bb.chunk.js.LICENSE.txt"
+    "static/css/main.0f70511c.chunk.css.map": "/created-from-friendships/static/css/main.0f70511c.chunk.css.map",
+    "static/js/2.cb1ea2b2.chunk.js.LICENSE.txt": "/created-from-friendships/static/js/2.cb1ea2b2.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.6e0d51e6.js",
-    "static/js/2.35d773bb.chunk.js",
-    "static/css/main.fb27a66d.chunk.css",
-    "static/js/main.0444ae0c.chunk.js"
+    "static/js/runtime-main.c1044159.js",
+    "static/js/2.cb1ea2b2.chunk.js",
+    "static/css/main.0f70511c.chunk.css",
+    "static/js/main.8b3f6cc9.chunk.js"
   ]
 }
