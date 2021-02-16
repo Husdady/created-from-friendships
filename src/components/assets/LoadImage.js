@@ -1,8 +1,8 @@
 const LoadImage = props => {
-  const {onChange, id} = props;
+  const {onChange, id, name} = props;
   return (
     <div className="edit-image">
-      <input onChange={onChange} type="file" id={id} accept="image/*" />
+      <input onChange={onChange} name={name} type="file" id={id} accept="image/*" />
       <label htmlFor={id} className="load-image"></label>
     </div>
   )

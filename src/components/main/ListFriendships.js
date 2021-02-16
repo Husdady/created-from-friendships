@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Icon from '../assets/Icon';
 import LoadImage from '../assets/LoadImage';
 import Swal from 'sweetalert2';
+import ReactStars from "react-rating-stars-component";
 
 const ListFriendships = props => {
   const {
@@ -23,59 +24,95 @@ const ListFriendships = props => {
     tipoDeRelacion,
     belleza,
     sexy,
-    showModal
-  } = props;
+    showModal,
+    index,
+    changeUserImg,
+    changeBackgroundImg
+  } = props,
 
-  const [edit, setEdit] = useState(false),
-  [showCamera, setShowCamera] = useState(false),
-  [applyChanges, setApplyChanges] = useState(true),
+    /* Mostrar camara */
+    [showCamera, setShowCamera] = useState(false),
 
-  loadImage = e => {
-    const newImg = e.target.parentElement.parentElement.querySelector('img');
-    const imageActual = e.target.parentElement.parentElement.querySelector('img').src;
-    const file = e.target.parentElement.querySelector('input[type="file"]').files[0];
-    const reader = new FileReader();
-    
-    if (applyChanges){
-    reader.addEventListener('load', () => {
-      newImg.src = reader.result;
-      setShowCamera(false);
-    })
-    file && reader.readAsDataURL(file);
-    } else {
-      return null;
+    /* Cambiar icono de editar y check */
+    [edit, setEdit] = useState(false),
+
+    /* Capturando la actual img de usuario */
+    [actualUserImg, setActualUserImg] = useState(''),
+
+    /* Capturando la actual img de fondo */
+    [actualBackgroundImg, setActualBackgroundImg] = useState(''),
+
+    [applyChanges, setApplyChanges] = useState(null),
+
+    loadImage = e => {
+      const { name } = e.target,
+        file = e.target.parentElement.querySelector('input[type="file"]').files[0], reader = new FileReader();
+      reader.addEventListener('load', () => {
+        if (name === 'userImg') {
+          setActualUserImg(reader.result);
+        } else {
+          setActualBackgroundImg(reader.result);
+        }
+      }, false)
+      file && reader.readAsDataURL(file);
+    },
+
+    confirmLoadImage = () => {
+      Swal.fire({
+        html: `<h3 id="applyChanges">¿Desea aplicar los cambios?</h3>`,
+        background: 'rgba(0,0,0,0.85)',
+        showDenyButton: true,
+        confirmButtonText: '<i class="fas fa-check" id="apply-changes-check"></i>',
+        denyButtonText: '<i class="fas fa-times"></i>',
+        confirmButtonColor: '#12A002',
+        denyButtonColor: '#A80000',
+        allowOutsideClick: false
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (!applyChanges) {
+            actualUserImg !== '' && changeUserImg(actualUserImg, index);
+          } else {
+            actualBackgroundImg !== '' && changeBackgroundImg(actualBackgroundImg, index);
+          }
+          setShowCamera(false);
+          setEdit(false);
+        } else if (result.isDenied) {
+
+          if (!applyChanges) {
+            if (imagenUsuario.indexOf('user-') !== -1) {
+              setActualUserImg('');
+            } else {
+              changeUserImg(imagenUsuario, index);
+              setActualUserImg(imagenUsuario);
+            }
+          } else {
+            if (fondoImagen.indexOf('background-') !== -1) {
+              setActualBackgroundImg('');
+            } else {
+              changeBackgroundImg(fondoImagen, index);
+              setActualBackgroundImg(fondoImagen);
+            }
+          }
+          setShowCamera(false);
+          setEdit(false);
+        }
+      })
     }
-  },
-  
-  confirmLoadImage = () =>{
-
-    Swal.fire({
-      html: `<h3 id="applyChanges">¿Desea aplicar los cambios?</h3>`,
-      background: 'rgba(0,0,0,0.85)',
-      showDenyButton: true,
-      confirmButtonText: '<i class="fas fa-check" id="apply-changes-check"></i>',
-      denyButtonText: '<i class="fas fa-times"></i>',
-      confirmButtonColor: '#12A002',
-      denyButtonColor: '#A80000',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        return setApplyChanges(true);
-      } else if (result.isDenied) {
-        return setApplyChanges(false);
-      }
-    })   
-  }
 
   return (
     <div className="person">
 
       <article className="image-person">
 
-        <img className="background-image" src={`${process.env.PUBLIC_URL}/${fondoImagen}`} alt="background" />
+        <img className="background-image" src={!actualBackgroundImg ? `${process.env.PUBLIC_URL}/${fondoImagen}` : actualBackgroundImg} alt="background" />
 
         {showCamera
           ? <LoadImage
-            onChange={e => loadImage(e)}
+            onChange={e => {
+              setApplyChanges(true);
+              loadImage(e);
+            }}
+            name="backgroundImg"
             id="file"
           />
           : null}
@@ -85,22 +122,47 @@ const ListFriendships = props => {
       <article className="name-person">
         {!edit
           ? <Icon title="Editar" className="fas fa-edit"
-          onClick={() => {
-            setEdit(true);
-            setShowCamera(true);
+            onClick={() => {
+              setShowCamera(true);
+              setEdit(true);
+            }} />
+          : <Icon title="Aplicar cambios" className="fas fa-check" onClick={() => {
+            confirmLoadImage();
           }} />
-          : <Icon title="Aplicar cambios" className="fas fa-check" onClick={() => { setEdit(false); confirmLoadImage() }} />
         }
-        <Icon title="Eliminar" className="fas fa-trash" onClick={props.deleteFriendship} />
+        <Icon title="Eliminar" className="fas fa-trash" onClick={() => {
+          Swal.fire({
+            icon: 'warning',
+            iconColor: '#BBB45B',
+            html: `<h3 id="messageForDeleteFriend">¿Estás seguro(a) que deseas eliminar a ${nombreDeUsuario}?</h3>`,
+            background: 'rgba(0,0,0,0.85)',
+            showDenyButton: true,
+            confirmButtonText: `Eliminar`,
+            denyButtonText: `Descartar`,
+            confirmButtonColor: '#A80000',
+            denyButtonColor: 'rgba(255,255,255,0.15)',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              props.deleteFriendship();
+              props.showFriendsDelete();
+            } else if (result.isDenied) {
+              return null;
+            }
+          })
+        }} />
         <figure>
-          <img src={`${process.env.PUBLIC_URL}/${imagenUsuario}`} alt={nombreDeUsuario} title={nombreDeUsuario} onClick={showModal} />
+          <img src={!actualUserImg ? `${process.env.PUBLIC_URL}/${imagenUsuario}` : actualUserImg} alt={nombreDeUsuario} title={nombreDeUsuario} onClick={() => showModal()} />
 
           {showCamera
             ? <LoadImage
-            onChange={e => loadImage(e)}
-            id="file1"
-          />
-          : null}
+              onChange={e => {
+                setApplyChanges(false);
+                loadImage(e);
+              }}
+              name="userImg"
+              id="file1"
+            />
+            : null}
 
         </figure>
         <h4>{nombreDeUsuario} {apellidosDeUsuario}</h4>
@@ -149,11 +211,15 @@ const ListFriendships = props => {
       </article>
 
       <article className="assessment">
-        <Icon className="fas fa-star" />
-        <Icon className="fas fa-star" />
-        <Icon className="fas fa-star" />
-        <Icon className="fas fa-star" />
-        <Icon className="fas fa-star" />
+        <ReactStars
+          count={5}
+          size={18}
+          char=""
+          onChange={e => console.log(e)}
+          color="white"
+          color="rgba(255, 255, 255, 0.7)"
+          activeColor="#F89D07"
+        />
       </article>
 
     </div>

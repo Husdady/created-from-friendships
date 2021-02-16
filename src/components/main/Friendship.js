@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './css/styles.css';
 
 /* Components */
@@ -11,9 +11,43 @@ import Modal from './Modal';
 import friendships from '../json/friendships';
 
 /* Librarys */
-import Swal from 'sweetalert2';
+import message from '../assets/message';
 
 const Friendship = () => {
+
+  const [mq, setMq] = useState('');
+
+  const mediaQueries = () => {
+    if (window.innerWidth > 600) {
+      setMq(true);
+    } else {
+      setMq(false);
+    }
+  }
+
+  useEffect(() => {
+    mediaQueries();
+    window.addEventListener('resize', () => mediaQueries());
+  }, []);
+
+  const deleteHistory = () => {
+    if (deletePerson.length > 0) {
+      message(
+        false,
+        '',
+        'deleteHistory',
+        'El historial ha sido borrado con éxito&nbsp;&nbsp;&nbsp;<i id="check" class="fas fa-check-circle"></i>'
+      );
+      setDeletePerson([]);
+    } else {
+      message(
+        false,
+        '',
+        'deleteHistory',
+        'Error ! El historial está vacío&nbsp;&nbsp;&nbsp;<i id="danger" class="fas fa-times-circle"></i>'
+      );
+    }
+  }
 
   const [person, setPerson] = useState(friendships),
     [deletePerson, setDeletePerson] = useState([]),
@@ -34,7 +68,7 @@ const Friendship = () => {
     if (!y) {
       const newDate = new Date();
       let date = `${newDate.getDate()}/${newDate.getMonth() + 1 < 10 ? '0' : null}${newDate.getMonth() + 1}/${newDate.getFullYear()}`,
-        hour = `${newDate.getHours()}:${newDate.getMinutes()}`;
+        hour = `${newDate.getHours()}:${newDate.getMinutes() < 10 ? '0' + newDate.getMinutes() : newDate.getMinutes()}`;
       const friends = {
         nombre: x.nombreDeUsuario,
         apellidos: x.apellidosDeUsuario,
@@ -49,6 +83,18 @@ const Friendship = () => {
 
   const addNewFriend = newFriend => {
     setPerson([...person, newFriend]);
+  }
+
+  const changeUserImg = (img, index) => {
+    let newArr = [...person];
+    newArr[index].imagenUsuario = img;
+    setPerson(newArr);
+  }
+
+  const changeBackgroundImg = (img, index) => {
+    let newArr = [...person];
+    newArr[index].fondoImagen = img;
+    setPerson(newArr);
   }
 
   return (
@@ -75,10 +121,12 @@ const Friendship = () => {
       </section>
 
       <section id="friendships-delete">
-        <h3>Amistades eliminadas:</h3>
+        <h3>Amistades eliminadas:{mq ? <button onClick={deleteHistory}>Borrar historial de amistades eliminadas</button> : null}</h3>
+
         <DeleteFriendship
           deletePerson={deletePerson}
         />
+        {!mq ? <button onClick={deleteHistory}>Borrar historial de amistades eliminadas</button> : null}
       </section>
 
       <section id="friendships">
@@ -106,30 +154,18 @@ const Friendship = () => {
                 tipoDeRelacion={x.tipoDeRelacion}
                 belleza={x.belleza}
                 sexy={x.sexy}
+                index={index}
+
+                changeUserImg={changeUserImg}
+                changeBackgroundImg={changeBackgroundImg}
+
                 showModal={() => setShowModal({
                   condition: true,
                   index: index
                 })}
-                deleteFriendship={() => {
-                  Swal.fire({
-                    icon: 'warning',
-                    iconColor: '#BBB45B',
-                    html: `<h3 id="messageForDeleteFriend">¿Estás seguro(a) que deseas eliminar a ${x.nombreDeUsuario}?</h3>`,
-                    background: 'rgba(0,0,0,0.85)',
-                    showDenyButton: true,
-                    confirmButtonText: `Eliminar`,
-                    denyButtonText: `Descartar`,
-                    confirmButtonColor: '#A80000',
-                    denyButtonColor: 'rgba(255,255,255,0.15)',
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-                      deleteCardPerson(person, index);
-                      showFriendsDelete(x);
-                    } else if (result.isDenied) {
-                      return null;
-                    }
-                  })
-                }}
+
+                deleteFriendship={() => deleteCardPerson(person, index)}
+                showFriendsDelete={() => showFriendsDelete(x)}
               />
             ))
             : <h2 id="all-friendships-deleted">Todas las amistades han sido eliminadas</h2>
