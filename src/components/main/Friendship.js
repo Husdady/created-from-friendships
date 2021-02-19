@@ -12,6 +12,7 @@ import friendships from '../json/friendships';
 
 /* Librarys */
 import message from '../assets/message';
+import useLocalStorage from '../assets/useLocalStorage';
 
 const Friendship = () => {
 
@@ -27,8 +28,8 @@ const Friendship = () => {
 
   useEffect(() => {
     mediaQueries();
-    window.addEventListener('resize', () => mediaQueries());
-  }, []);
+    window.addEventListener('resize', mediaQueries);
+  }, [mq]);
 
   const deleteHistory = () => {
     if (deletePerson.length > 0) {
@@ -49,8 +50,8 @@ const Friendship = () => {
     }
   }
 
-  const [person, setPerson] = useState(friendships),
-    [deletePerson, setDeletePerson] = useState([]),
+  const [person, setPerson] = useLocalStorage('friendships', friendships),
+    [deletePerson, setDeletePerson] = useLocalStorage('deletePerson', []),
     [showModal, setShowModal] = useState({
       condition: false,
       index: 0
@@ -85,22 +86,14 @@ const Friendship = () => {
     setPerson([...person, newFriend]);
   }
 
-  const changeUserImg = (img, index) => {
-    let newArr = [...person];
-    newArr[index].imagenUsuario = img;
-    setPerson(newArr);
-  }
-
-  const changeBackgroundImg = (img, index) => {
-    let newArr = [...person];
-    newArr[index].fondoImagen = img;
+  const changeImg = newArr => {
     setPerson(newArr);
   }
 
   return (
 
     <div id="container">
-
+      
       { showModal.condition === true
         ? <Modal
           objectJson={person}
@@ -135,7 +128,8 @@ const Friendship = () => {
           {person.length > 0
             ? person.map((x, index) => (
               <ListFriendships
-                key={index}
+                key={x.id}
+                maya={x.id}
                 fondoImagen={x.fondoImagen}
                 imagenUsuario={x.imagenUsuario}
                 nombreDeUsuario={x.nombreDeUsuario}
@@ -144,8 +138,14 @@ const Friendship = () => {
                 sobreElUsuario={x.sobreElUsuario}
                 edad={x.edad}
                 genero={x.genero}
+                signo={x.signo}
+                nacimiento={x.nacimiento}
                 pais={x.pais}
                 ciudad={x.ciudad}
+                fobia={x.fobia}
+                odioDelUsuario={x.odioDelUsuario}
+                gustoSobreElUsuario={x.gustoSobreElUsuario}
+                odioSobreElUsuario={x.odioSobreElUsuario}
                 comidaFavorita={x.comidaFavorita}
                 colorFavorito={x.colorFavorito}
                 serieFavorita={x.serieFavorita}
@@ -154,11 +154,11 @@ const Friendship = () => {
                 tipoDeRelacion={x.tipoDeRelacion}
                 belleza={x.belleza}
                 sexy={x.sexy}
+                importancia={x.importancia}
+                valoracion={x.valoracion}  
+                person={person}
                 index={index}
-
-                changeUserImg={changeUserImg}
-                changeBackgroundImg={changeBackgroundImg}
-
+                changeImg={changeImg}
                 showModal={() => setShowModal({
                   condition: true,
                   index: index

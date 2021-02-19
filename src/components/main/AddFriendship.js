@@ -9,6 +9,9 @@ import Select from '../assets/Select';
 import message from '../assets/message';
 
 const AddFriendship = props => {
+
+  const [id, setId] = useState(3);
+
   let defaultBackgroundImage = 'img/background-default-undefined.jpg',
     defaultImageUser = 'img/users/default-image-user-undefined.png',
     defaultCardUser = {
@@ -39,6 +42,17 @@ const AddFriendship = props => {
     setNewFriend({
       ...newFriend,
       [name]: value
+    })
+  }
+
+  const saveDate = e => {
+    const { value } = e.target;
+    let newDate = new Date(value),
+    day = newDate.getDay() + 1,
+    month = newDate.getMonth() + 1;
+    setNewFriend({
+      ...newFriend,
+      nacimiento: `${newDate.getDate() + 1 < 10 ? "0"+day : newDate.getDate() + 1}/${newDate.getMonth() + 1 < 10 ? "0"+month : newDate.getMonth() + 1}/${newDate.getFullYear()}`
     })
   }
 
@@ -81,10 +95,13 @@ const AddFriendship = props => {
           'newFriendAdded',
           'Nueva amistad creada con éxito&nbsp;&nbsp;&nbsp;<i id="check" class="fas fa-check-circle"></i>'
         );
-
-        props.addNewFriend(newFriend);
+        props.addNewFriend({
+          ...newFriend,
+          id: id
+        });
         document.getElementById('form').reset();
         setNewFriend(defaultCardUser);
+        setId(id + 1);
       }
     }
   }
@@ -152,6 +169,36 @@ const AddFriendship = props => {
         }
         name="genero"
         onChange={e => changeImage(e)}
+      />
+
+      <span>¿Cuál es su signo zoodiacal?</span>
+      <Select
+        content={
+          <Fragment>
+            <option hidden="hidden">Selecciona una signo</option>
+            <option>Aries</option>
+            <option>Tauro</option>
+            <option>Géminis</option>
+            <option>Cancer</option>
+            <option>Leo</option>
+            <option>Virgo</option>
+            <option>Libra</option>
+            <option>Escorpio</option>
+            <option>Sagitario</option>
+            <option>Capricornio</option>
+            <option>Acuario</option>
+          </Fragment>
+        }
+        name="signo"
+        onChange={e => changeInformation(e)}
+      />
+
+      <span>¿Cuál es su signo zoodiacal?</span>
+      <input type="date"
+        name="nacimiento"
+        onChange={e => {
+          saveDate(e)
+        }}
       />
 
       <span>¿Cuál es su país de origen?</span>
@@ -410,6 +457,38 @@ const AddFriendship = props => {
         limit={12}
       />
 
+      <span>¿A qué le tiene miedo?</span>
+      <Text
+        placeholder="Ejm: Los alacranes"
+        name="fobia"
+        onChange={e => changeInformation(e)}
+        limit={50}
+      />
+
+      <span>¿Qué es lo que él o ella más odia o detesta?</span>
+      <Text
+        placeholder="Ejm: La corrupción"
+        name="odioDelUsuario"
+        onChange={e => changeInformation(e)}
+        limit={50}
+      />
+
+      <span>¿Qué es lo que más te gusta de él o ella?</span>
+      <Text
+        placeholder="Ejm: Su inteligencia"
+        name="gustoSobreElUsuario"
+        onChange={e => changeInformation(e)}
+        limit={50}
+      />
+
+      <span>¿Qué es lo que más odias de él o ella?</span>
+      <Text
+        placeholder="Ejm: Su impuntualidad"
+        name="odioSobreElUsuario"
+        onChange={e => changeInformation(e)}
+        limit={50}
+      />
+
       <span>¿Cuál es su comida favorita?</span>
       <Text
         placeholder="Ejm: Arroz con pato"
@@ -439,7 +518,7 @@ const AddFriendship = props => {
         placeholder="Ejm: La casa del terror"
         name="peliculaFavorita"
         onChange={e => changeInformation(e)}
-        limit={20}
+        limit={35}
       />
 
       <span>¿Cuál es su canción favorita?</span>
@@ -526,16 +605,40 @@ const AddFriendship = props => {
         onChange={e => changeInformation(e)}
       />
 
+      <span>¿Qué tan importante es él o ella en tu vida?</span>
+      <Text
+        placeholder="Ejm: Erica es muy importante para mi"
+        name="importancia"
+        onChange={e => changeInformation(e)}
+        limit={50}
+      />
+
+      <span>Define una valoración para tu nueva amistad</span>
+      <Select
+        content={
+          <Fragment>
+            <option hidden="hidden">Selecciona una opción</option>
+            <option>✮ Muy baja</option>
+            <option>✮✮ Baja</option>
+            <option>✮✮✮ Normal</option>
+            <option>✮✮✮✮ Alta</option>
+            <option>✮✮✮✮✮ Muy alta</option>
+          </Fragment>
+        }
+        name="valoracion"
+        onChange={e => changeInformation(e)}
+      />
+
       <span>Escribe algo sobre él o ella:</span>
       <textarea
         placeholder="Escribe algo sobre él o ella..."
         name="sobreElUsuario"
         onChange={e => changeInformation(e)}
-        maxLength={200}
+        maxLength={225}
       ></textarea>
 
       <button type="submit" id="add-person">&nbsp;Añadir persona</button>
-    </form>
+    </form >
   )
 }
 

@@ -4,7 +4,9 @@ const DeleteFriendship = props => {
   
   const friendsDelete = props.deletePerson.map( (x, index) => (
     <div className="friend-delete" key={index}>
-      <img src={x.imagen.includes('user-') ? `${process.env.PUBLIC_URL}/${x.imagen}` : x.imagen} alt={x.nombre} />
+      <figure style={{
+        backgroundImage: `url(${x.imagen.includes('user-') ? process.env.PUBLIC_URL +"/" + x.imagen : x.imagen})`
+      }}></figure>
       <h4>Eliminaste a {x.nombre} {x.apellidos} de tu lista de amistades. Se eliminó el {x.date} a las {x.hour} hrs</h4>
     </div>
     ))

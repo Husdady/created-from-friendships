@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Icon from '../assets/Icon';
 import LoadImage from '../assets/LoadImage';
 import Swal from 'sweetalert2';
@@ -14,8 +14,14 @@ const ListFriendships = props => {
     sobreElUsuario,
     edad,
     genero,
+    signo,
+    nacimiento,
     pais,
     ciudad,
+    fobia,
+    odioDelUsuario,
+    gustoSobreElUsuario,
+    odioSobreElUsuario,
     comidaFavorita,
     colorFavorito,
     serieFavorita,
@@ -24,10 +30,12 @@ const ListFriendships = props => {
     tipoDeRelacion,
     belleza,
     sexy,
+    importancia,
+    valoracion,
     showModal,
     index,
-    changeUserImg,
-    changeBackgroundImg
+    person,
+    changeImg
   } = props,
 
     /* Mostrar camara */
@@ -99,129 +107,195 @@ const ListFriendships = props => {
       })
     }
 
+  const changeUserImg = (img, index) => {
+    let newArr = [...person];
+    newArr[index].imagenUsuario = img;
+    changeImg(newArr);
+  }
+
+  const changeBackgroundImg = (img, index) => {
+    let newArr = [...person];
+    newArr[index].fondoImagen = img;
+    changeImg(newArr);
+  }
+
+  useEffect(() => {
+    setActualUserImg(imagenUsuario.includes('user-') ? process.env.PUBLIC_URL + "/" + imagenUsuario : imagenUsuario);
+    setActualBackgroundImg(fondoImagen.includes('background-') ? process.env.PUBLIC_URL + "/" + fondoImagen : fondoImagen);
+  }, [imagenUsuario, fondoImagen]);
+
   return (
     <div className="person">
 
-      <article className="image-person">
+      <div className="content-person">
 
-        <img className="background-image" src={!actualBackgroundImg ? `${process.env.PUBLIC_URL}/${fondoImagen}` : actualBackgroundImg} alt="background" />
-
-        {showCamera
-          ? <LoadImage
-            onChange={e => {
-              setApplyChanges(true);
-              loadImage(e);
-            }}
-            name="backgroundImg"
-            id="file"
-          />
-          : null}
-
-      </article>
-
-      <article className="name-person">
-        {!edit
-          ? <Icon title="Editar" className="fas fa-edit"
-            onClick={() => {
-              setShowCamera(true);
-              setEdit(true);
-            }} />
-          : <Icon title="Aplicar cambios" className="fas fa-check" onClick={() => {
-            confirmLoadImage();
-          }} />
-        }
-        <Icon title="Eliminar" className="fas fa-trash" onClick={() => {
-          Swal.fire({
-            icon: 'warning',
-            iconColor: '#BBB45B',
-            html: `<h3 id="messageForDeleteFriend">¿Estás seguro(a) que deseas eliminar a ${nombreDeUsuario}?</h3>`,
-            background: 'rgba(0,0,0,0.85)',
-            showDenyButton: true,
-            confirmButtonText: `Eliminar`,
-            denyButtonText: `Descartar`,
-            confirmButtonColor: '#A80000',
-            denyButtonColor: 'rgba(255,255,255,0.15)',
-          }).then((result) => {
-            if (result.isConfirmed) {
-              props.deleteFriendship();
-              props.showFriendsDelete();
-            } else if (result.isDenied) {
-              return null;
-            }
-          })
-        }} />
-        <figure>
-          <img src={!actualUserImg ? `${process.env.PUBLIC_URL}/${imagenUsuario}` : actualUserImg} alt={nombreDeUsuario} title={nombreDeUsuario} onClick={() => showModal()} />
+        <article className="image-person" style={{
+          backgroundImage: `url(${!actualBackgroundImg ? `${process.env.PUBLIC_URL}/${fondoImagen}` : actualBackgroundImg})`
+        }}>
 
           {showCamera
             ? <LoadImage
               onChange={e => {
-                setApplyChanges(false);
+                setApplyChanges(true);
                 loadImage(e);
               }}
-              name="userImg"
-              id="file1"
+              name="backgroundImg"
+              id={'background-file' + index}
             />
             : null}
 
-        </figure>
-        <h4>{nombreDeUsuario} {apellidosDeUsuario}</h4>
-        <span>{profesion}</span>
-        <span><b>-</b></span>
-        <p>“ {sobreElUsuario} ”</p>
-      </article>
+        </article>
 
-      <article className="information-person">
+        <article className="name-person">
+          {!edit
+            ? <Icon title="Editar" className="fas fa-edit"
+              onClick={() => {
+                setShowCamera(true);
+                setEdit(true);
+              }} />
+            : <Icon title="Aplicar cambios" className="fas fa-check" onClick={() => {
+              confirmLoadImage();
+            }} />
+          }
+          <Icon title="Eliminar" className="fas fa-trash" onClick={() => {
+            Swal.fire({
+              icon: 'warning',
+              iconColor: '#BBB45B',
+              html: `<h3 id="messageForDeleteFriend">¿Estás seguro(a) que deseas eliminar a ${nombreDeUsuario}?</h3>`,
+              background: 'rgba(0,0,0,0.85)',
+              showDenyButton: true,
+              confirmButtonText: `Eliminar`,
+              denyButtonText: `Descartar`,
+              confirmButtonColor: '#A80000',
+              denyButtonColor: 'rgba(255,255,255,0.15)',
+            }).then((result) => {
+              if (result.isConfirmed) {
+                props.deleteFriendship();
+                props.showFriendsDelete();
+              } else if (result.isDenied) {
+                return null;
+              }
+            })
+          }} />
+          <figure style={{
+            backgroundImage: `url(${!actualUserImg ? `${process.env.PUBLIC_URL}/${imagenUsuario}` : actualUserImg})`
+          }}
+            onClick={() => !showCamera ? showModal() : null}
+          >
 
-        <div className="date">
-          <h4><Icon className="fab fa-pagelines" />&nbsp;Edad: <span>{edad} años</span></h4>
-          <h4>{
-            genero === "Masculino"
-              ? <Icon className="fas fa-mars" />
-              : genero === "Femenino"
-                ? <Icon className="fas fa-venus" />
-                : <Icon className="fas fa-neuter" />
-          }&nbsp;Género: <span>{genero}</span></h4>
-        </div>
+            {showCamera
+              ? <LoadImage
+                onChange={e => {
+                  setApplyChanges(false);
+                  loadImage(e);
+                }}
+                name="userImg"
+                id={'file' + index}
+              />
+              : null}
 
-        <div className="date">
-          <h4><Icon className="fas fa-flag" />&nbsp;País de origen: <span>{pais}</span></h4>
-          <h4><Icon className="fas fa-home" />&nbsp;Ciudad o Provincia: <span>{ciudad}</span></h4>
-        </div>
+          </figure>
+          <h4>{nombreDeUsuario} {apellidosDeUsuario}</h4>
+          <span>{profesion}</span>
+          <span><b>-</b></span>
+          <p>“ {sobreElUsuario} ”
+          <br />
+            <br />
+            <b>“ Para mí, {nombreDeUsuario}, {importancia}</b>
+          &nbsp;&nbsp;
+          {
+              valoracion === '✮✮✮✮✮ Muy alta' ?
+                <Icon className="fas fa-heart" style={{ padding: 0, color: 'darkred' }}
+                />
+                : valoracion === '✮✮✮✮ Alta' ?
+                  <Icon className="fas fa-laugh" style={{ padding: 0, color: 'darkgoldenrod' }}
+                  />
+                  : valoracion === '✮✮✮ Normal' ?
+                    <Icon className="fas fa-grin-wink" style={{ padding: 0, color: 'darkgoldenrod' }}
+                    />
+                    : valoracion === '✮✮ Baja' ?
+                      <Icon className="fas fa-thumbs-down" style={{ padding: 0, color: 'darkcyan' }}
+                      />
+                      : <Icon className="fas fa-poo" style={{ padding: 0, color: 'saddlebrown' }}
+                      />
+            }
+          ”
+          </p>
+          <br />
+        </article>
 
-        <div className="date">
-          <h4><Icon className="fas fa-utensils" />&nbsp;Comida favorita: <span>{comidaFavorita}</span></h4>
-          <h4><Icon className="fas fa-tint" />&nbsp;Color favorito: <span>{colorFavorito}</span></h4>
-        </div>
+        <article className="information-person">
 
-        <div className="date">
-          <h4><Icon className="fas fa-dragon" />&nbsp;Serie favorita: <span>{serieFavorita}</span></h4>
-          <h4><Icon className="fas fa-video" />&nbsp;Película favorita: <span>{peliculaFavorita}</span></h4>
-        </div>
+          <div className="fact">
+            <h4><Icon className="fab fa-pagelines" />&nbsp;Edad: <span>{edad} años</span></h4>
+            <h4>{
+              genero === "Masculino"
+                ? <Icon className="fas fa-mars" />
+                : genero === "Femenino"
+                  ? <Icon className="fas fa-venus" />
+                  : <Icon className="fas fa-neuter" />
+            }&nbsp;Género: <span>{genero}</span></h4>
+          </div>
 
-        <div className="date">
-          <h4><Icon className="fas fa-music" />&nbsp;Canción favorita: <span>{cancionFavorita}</span></h4>
-          <h4><Icon className="fas fa-heart" />&nbsp;Tipo de relación: <span>{tipoDeRelacion}</span></h4>
-        </div>
+          <div className="fact">
+            <h4><Icon className="fas fa-khanda" />&nbsp;Signo Zodiacal: <span>{signo}</span></h4>
+            <h4><Icon className="fas fa-calendar-alt" />&nbsp;Fecha de Nacimiento: <span>{nacimiento}</span></h4>
+          </div>
 
-        <div className="date">
-          <h4><Icon className="fas fa-grin-hearts" />&nbsp;Belleza: <span>{belleza}</span></h4>
-          <h4><Icon className="fab fa-angellist" />&nbsp;Sexy: <span>{sexy}</span></h4>
-        </div>
-      </article>
+          <div className="fact">
+            <h4><Icon className="fas fa-flag" />&nbsp;País de origen: <span>{pais}</span></h4>
+            <h4><Icon className="fas fa-home" />&nbsp;Ciudad o Provincia: <span>{ciudad}</span></h4>
+          </div>
+
+          <div className="fact">
+            <h4><Icon className="fas fa-ghost" />&nbsp;Fobia: <span>{fobia}</span></h4>
+            <h4><Icon className="fas fa-angry" />&nbsp;Lo que más odia: <span>{odioDelUsuario}</span></h4>
+          </div>
+
+          <div className="fact">
+            <h4><Icon className="fas fa-hand-peace" />&nbsp;Lo que más te gusta de {nombreDeUsuario}: <span>{gustoSobreElUsuario}</span></h4>
+            <h4><Icon className="fas fa-hand-middle-finger" />&nbsp;Lo que más odias de {nombreDeUsuario}: <span>{odioSobreElUsuario}</span></h4>
+          </div>
+
+          <div className="fact">
+            <h4><Icon className="fas fa-utensils" />&nbsp;Comida favorita: <span>{comidaFavorita}</span></h4>
+            <h4><Icon className="fas fa-tint" />&nbsp;Color favorito: <span>{colorFavorito}</span></h4>
+          </div>
+
+          <div className="fact">
+            <h4><Icon className="fas fa-dragon" />&nbsp;Serie favorita: <span>{serieFavorita}</span></h4>
+            <h4><Icon className="fas fa-video" />&nbsp;Película favorita: <span>{peliculaFavorita}</span></h4>
+          </div>
+
+          <div className="fact">
+            <h4><Icon className="fas fa-music" />&nbsp;Canción favorita: <span>{cancionFavorita}</span></h4>
+            <h4><Icon className="fas fa-heart" />&nbsp;Tipo de relación: <span>{tipoDeRelacion}</span></h4>
+          </div>
+
+          <div className="fact">
+            <h4><Icon className="fas fa-grin-hearts" />&nbsp;Belleza: <span>{belleza}</span></h4>
+            <h4><Icon className="fab fa-angellist" />&nbsp;Sexy: <span>{sexy}</span></h4>
+          </div>
+        </article>
+
+      </div>
 
       <article className="assessment">
         <ReactStars
-          count={5}
-          size={18}
+          value={
+            valoracion === '✮✮✮✮✮ Muy alta' ? 5
+              : valoracion === '✮✮✮✮ Alta' ? 4
+                : valoracion === '✮✮✮ Normal' ? 3
+                  : valoracion === '✮✮ Baja' ? 2
+                    : 1
+          }
+          edit={false}
           char=""
-          onChange={e => console.log(e)}
-          color="white"
-          color="rgba(255, 255, 255, 0.7)"
+          size={18}
+          color="rgba(255,255,255, 0.7)"
           activeColor="#F89D07"
         />
       </article>
-
     </div>
   )
 };
