@@ -77,32 +77,23 @@ const ListFriendships = props => {
         allowOutsideClick: false
       }).then((result) => {
         if (result.isConfirmed) {
-          if (!applyChanges) {
-            actualUserImg !== '' && changeUserImg(actualUserImg, index);
-          } else {
-            actualBackgroundImg !== '' && changeBackgroundImg(actualBackgroundImg, index);
-          }
           setShowCamera(false);
           setEdit(false);
+          if (!applyChanges) {
+            return !actualUserImg.includes('user-') ? changeUserImg(actualUserImg, index) : null;
+          } else {
+            return !actualBackgroundImg.includes('background-') ? changeBackgroundImg(actualBackgroundImg, index) : null;
+          }
         } else if (result.isDenied) {
-
-          if (!applyChanges) {
-            if (imagenUsuario.indexOf('user-') !== -1) {
-              setActualUserImg('');
-            } else {
-              changeUserImg(imagenUsuario, index);
-              setActualUserImg(imagenUsuario);
-            }
-          } else {
-            if (fondoImagen.indexOf('background-') !== -1) {
-              setActualBackgroundImg('');
-            } else {
-              changeBackgroundImg(fondoImagen, index);
-              setActualBackgroundImg(fondoImagen);
-            }
-          }
           setShowCamera(false);
           setEdit(false);
+          if (!applyChanges) {
+            imagenUsuario.indexOf('user-') === -1 && changeUserImg(imagenUsuario, index);
+            return imagenUsuario.indexOf('user-') !== -1 ? setActualUserImg('') : setActualUserImg(imagenUsuario);
+          } else {
+            fondoImagen.indexOf('background-') === -1 && changeBackgroundImg(fondoImagen, index);
+            return fondoImagen.indexOf('background-') !== -1 ? setActualBackgroundImg('') : setActualBackgroundImg(fondoImagen);
+          }
         }
       })
     }
@@ -197,7 +188,7 @@ const ListFriendships = props => {
           </figure>
           <h4>{nombreDeUsuario} {apellidosDeUsuario}</h4>
           <span>{profesion}</span>
-          <span><b>-</b></span>
+          <b>-</b>
           <p>“ {sobreElUsuario} ”
           <br />
             <br />

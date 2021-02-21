@@ -48,7 +48,6 @@
   flex-wrap: wrap;
   align-items: center;
   border-radius: 20px;
-  background-color: rgba(0, 0, 0, 0.9);
   padding: 1.5% 0 1.5% 3.5%;
   margin-bottom: 15px;
 }
@@ -68,7 +67,6 @@
 
 .friend-delete h4 {
   margin: 0;
-  color: rgba(255, 255, 255, 0.85);
   font-weight: normal;
   padding-left: 2%;
   letter-spacing: 2px;

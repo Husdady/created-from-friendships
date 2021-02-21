@@ -193,9 +193,10 @@ const AddFriendship = props => {
         onChange={e => changeInformation(e)}
       />
 
-      <span>¿Cuál es su signo zoodiacal?</span>
+      <span>¿Cuál es su fecha de nacimiento?</span>
       <input type="date"
         name="nacimiento"
+        placeholder="Ejm: 09/06/2001"
         onChange={e => {
           saveDate(e)
         }}

@@ -8,11 +8,6 @@ html {
   box-sizing: border-box;
 }
 
-body{
-background: rgb(0,0,0);
-background: linear-gradient(360deg, rgba(0,0,0,0.28895308123249297) 8%, rgba(92,176,208,0.5158438375350141) 51%, rgba(5,13,15,0.3337710084033614) 90%);
-}
-
 *, *:before, *:after {
   box-sizing: inherit;
 }
@@ -52,6 +47,15 @@ input[type="text"]{
   padding: 10px 15px;
 }
 
+input[type="date"]{
+  outline: none;
+}
+
+input::-webkit-calendar-picker-indicator:hover {
+  cursor: pointer;
+}
+
+
 select{
   padding: 5px;
 }
@@ -75,7 +79,6 @@ input[type="text"], input[type="number"], textarea{
 
 input[type="text"], input[type="date"], select, input[type="number"], textarea{
   width: 55%;
-  background-color: rgba(92, 176, 208, 0.75);
   margin: 10px 0;
   border: none;
 }
@@ -86,12 +89,9 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0;
 }
 
-input[type="text"]:focus, select:focus, input[type="number"]:focus, textarea:focus{
+input[type="text"]:focus, input[type="date"]:focus select:focus, input[type="number"]:focus, button:focus{
+  border: none;
   outline: none;
-}
-
-input[type="text"]::placeholder, input[type="number"]::placeholder, textarea::placeholder{
-  color: black;
 }
 
 input[type="text"]:focus::placeholder, input[type="number"]:focus::placeholder, textarea:focus::placeholder {
@@ -105,11 +105,6 @@ button {
 button:active {
   transform: scale(0.85);
   background-color: inherit;
-}
-
-button:focus{
-  border: none;
-  outline: none;
 }
 
 button:hover, i:hover, select:hover {

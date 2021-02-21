@@ -1,14 +1,12 @@
 #add-friendship {
   width: 36%;
   padding: .5% 1.5% 3%;
-  background-color: rgba(0, 0, 0, 0.9);
-  color: #60B0D0;
-  color: rgba(92, 176, 208, 0.85);
   border-radius: 10px;
   height: 100vh;
   max-height: 1600px;
   overflow-y: scroll;
   max-width: 2000px;
+  transition: .2s linear;
 }
 
 #add-friendship::-webkit-scrollbar {
@@ -33,15 +31,12 @@
 }
 
 #add-person {
-  background: #60B0D0;
-  background: rgba(92, 176, 208, 0.85);
   padding: 15px 0;
   width: 100%;
   border-radius: 20px;
   display: table;
   margin: 20px auto 0;
   font-family: 'Poiret One', sans-serif;
-  font-weight: bold;
 }
 
 #add-person:before {
