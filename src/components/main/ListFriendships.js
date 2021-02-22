@@ -80,9 +80,9 @@ const ListFriendships = props => {
           setShowCamera(false);
           setEdit(false);
           if (!applyChanges) {
-            return !actualUserImg.includes('user-') ? changeUserImg(actualUserImg, index) : null;
+            return actualUserImg === '' ? setActualUserImg('') : !actualUserImg.includes('user-') ? changeUserImg(actualUserImg, index) : null;
           } else {
-            return !actualBackgroundImg.includes('background-') ? changeBackgroundImg(actualBackgroundImg, index) : null;
+            return actualBackgroundImg === '' ? setActualBackgroundImg('') : !actualBackgroundImg.includes('background-') ? changeBackgroundImg(actualBackgroundImg, index) : null;
           }
         } else if (result.isDenied) {
           setShowCamera(false);
