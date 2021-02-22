@@ -362,6 +362,12 @@
   .name-person {
     margin-top: -40px;
   }
+  .fa-edit, .fa-trash, .fa-check{
+    top: 20%;
+  }
+  .fa-edit, .fa-check{
+    right: 7%;
+  }
 }
 
 @media screen and (max-width: 280px) {
