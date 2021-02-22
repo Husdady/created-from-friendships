@@ -152,7 +152,7 @@
   background-color: rgba(0, 0, 0, 0.9);
 }
 
-[theme-color="dark"] #friendships-delete h3, [theme-color="dark"] #friendships-delete h2, [theme-color="dark"] #friendships h3, [theme-color="dark"] .friend-delete h4, [theme-color="dark"] .fact, [theme-color="dark"] .name-person {
+[theme-color="dark"] #friendships-delete h3, [theme-color="dark"] #friendships-delete h2, [theme-color="dark"] #friendships h3, [theme-color="dark"] .friend-delete h4, [theme-color="dark"] .fact, [theme-color="dark"] .name-person, [theme-color="dark"] #all-friendships-deleted {
   color: whitesmoke;
   color: rgba(255, 255, 255, 0.65);
 }
